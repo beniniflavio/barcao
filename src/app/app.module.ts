@@ -9,6 +9,11 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { MovimentoComponent } from './admin/movimento/movimento.component';
+import { AbrirComponent } from './admin/movimento/abrir/abrir.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { MesasComponent } from './home/mesas/mesas.component';
+import { FiltroComponent } from './home/filtro/filtro.component';
 
 @NgModule({
   declarations: [
@@ -16,12 +21,17 @@ import { MovimentoComponent } from './admin/movimento/movimento.component';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    MovimentoComponent
+    MovimentoComponent,
+    AbrirComponent,
+    MesasComponent,
+    FiltroComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    CurrencyMaskModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
