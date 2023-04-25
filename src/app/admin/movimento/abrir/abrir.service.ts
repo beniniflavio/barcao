@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class AbrirService {
 
   constructor(private httpClient:HttpClient) { }
 
-  setMovimento(m:FormGroup) {
+  setMovimento(m:UntypedFormGroup) {
 
     const httpOptions = {
       headers: new HttpHeaders({

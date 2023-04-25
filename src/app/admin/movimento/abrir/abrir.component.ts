@@ -5,10 +5,10 @@ import { AdminService } from 'src/app/services/admin.service';
 import { AbrirService } from './abrir.service';
 
 import {
-  FormGroup,
-  FormControl,
+  UntypedFormGroup,
+  UntypedFormControl,
   Validators,
-  FormBuilder,
+  UntypedFormBuilder,
 } from '@angular/forms';
 
 @Component({
@@ -19,14 +19,14 @@ import {
 export class AbrirComponent implements OnInit {
   success: any;
 
-  formMovimento!: FormGroup;
+  formMovimento!: UntypedFormGroup;
 
 
   wrapper: any;
 
   constructor(
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private admService: AdminService,
     private service: AbrirService
   ) {}
@@ -43,8 +43,8 @@ export class AbrirComponent implements OnInit {
   }
 
   createForm(m: Movimento) {
-    this.formMovimento = new FormGroup({
-      suprimento: new FormControl(),
+    this.formMovimento = new UntypedFormGroup({
+      suprimento: new UntypedFormControl(),
 
     });
 
