@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeService } from './home.service';
+
 
 @Component({
   selector: 'app-home',
@@ -8,11 +8,11 @@ import { HomeService } from './home.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private service: HomeService) { }
+  constructor() { }
+
 
   ngOnInit(): void {
-    this.service.getMovimentoAberto().subscribe( response => {
-      console.log(response);
-    })
+
+
   }
 }
