@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotficationService } from '../services/notfication.service';
 
 
 @Component({
@@ -8,11 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private notification: NotficationService) { }
 
 
   ngOnInit(): void {
 
+    this.notification.showSuccess("Data shown successfully !!", "tutsmake.com")
 
   }
+
 }
