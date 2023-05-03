@@ -1,0 +1,9 @@
+<button type="button" class="btn btn-success position-relative mt-2" [routerLink]="['Carrinho']">
+  Carrinho
+  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    {{ this.wrapper.msgSaida[0].consumos.length}}+
+    <span class="visually-hidden">Itens no carrinho</span>
+  </span>
+</button>
+
+

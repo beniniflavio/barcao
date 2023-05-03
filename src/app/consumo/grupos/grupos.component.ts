@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GruposService } from './grupos.service';
 import { NotficationService } from 'src/app/services/notfication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-grupos',
@@ -14,11 +15,12 @@ export class GruposComponent implements OnInit {
 
   constructor(
     private service: GruposService,
-    private notification: NotficationService
+    private notification: NotficationService,
+    private router:Router,
   ) {}
 
   ngOnInit(): void {
-    this.notification.showInfo('buscando grupos', 'consumo');
+    /* this.notification.showInfo('buscando grupos', 'consumo'); */
 
     this.service.getGrupos().subscribe({
       next: (result: any) => {
@@ -33,5 +35,9 @@ export class GruposComponent implements OnInit {
         this.mensagem = 'Grupos obtidos com sucesso';
       },
     })
+  }
+
+  mercadoriaGrupo(idhash:any) {
+    this.router.navigate(['Grupo/' + idhash]);
   }
 }

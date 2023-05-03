@@ -8,6 +8,9 @@ import { MesasComponent } from './home/mesas/mesas.component';
 import { BalcaoComponent } from './home/balcao/balcao.component';
 import { DeliveryComponent} from './home/delivery/delivery.component';
 import { ConsumoComponent } from './consumo/consumo.component';
+import { MercadoriasgrupoComponent } from './consumo/mercadoriasgrupo/mercadoriasgrupo.component';
+import { VendaMercadoriaComponent } from './consumo/venda-mercadoria/venda-mercadoria.component';
+import { CarrinhoBalcaoComponent } from './home/carrinho-balcao/carrinho-balcao.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent },
@@ -18,7 +21,9 @@ const routes: Routes = [
   {path:'Delivery', component: DeliveryComponent },
   {path:'Eventos', component: EventosComponent},
   {path:'Consumo', component: ConsumoComponent},
-
+  {path:'Grupo/:id', component: MercadoriasgrupoComponent},
+  {path:'Consumo/:id', component: VendaMercadoriaComponent},
+  {path:'Carrinho', component: CarrinhoBalcaoComponent},
 
 ];
 

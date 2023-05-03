@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
+import { TagCloudComponent } from 'angular-tag-cloud-module';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +26,10 @@ import { EventosComponent } from './home/eventos/eventos.component';
 import { ConsumoComponent } from './consumo/consumo.component';
 import { FavoritoComponent } from './consumo/favorito/favorito.component';
 import { GruposComponent } from './consumo/grupos/grupos.component';
+import { MercadoriasgrupoComponent } from './consumo/mercadoriasgrupo/mercadoriasgrupo.component';
+import { VendaMercadoriaComponent } from './consumo/venda-mercadoria/venda-mercadoria.component';
+import { CarrinhoComponent } from './carrinho/carrinho.component';
+import { CarrinhoBalcaoComponent } from './home/carrinho-balcao/carrinho-balcao.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +47,10 @@ import { GruposComponent } from './consumo/grupos/grupos.component';
     ConsumoComponent,
     FavoritoComponent,
     GruposComponent,
+    MercadoriasgrupoComponent,
+    VendaMercadoriaComponent,
+    CarrinhoComponent,
+    CarrinhoBalcaoComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +65,7 @@ import { GruposComponent } from './consumo/grupos/grupos.component';
         closeButton: true,
         progressBar: true,
     }),
+    TagCloudComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
