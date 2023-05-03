@@ -18,7 +18,7 @@ export class FavoritoComponent implements OnInit {
     private notification: NotficationService) { }
 
   ngOnInit(): void {
-    this.notification.showInfo('buscando favoritos', 'consumo');
+    /*this.notification.showInfo('buscando favoritos', 'consumo'); */
     this.service.getFavoritos().subscribe({
       next: (result: any) => {
         // this.usersList?.push(result);

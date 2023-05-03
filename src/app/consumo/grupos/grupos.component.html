@@ -1,9 +1,9 @@
 <div class="card mt-2">
-  <h5 class="card-header">Mais Grupos</h5>
+  <h5 class="card-header">Grupos</h5>
   <div class="card-body">
     <div class="row">
-      <div class="col-4" *ngFor="let grps of wrapper.msgSaida[0]">
-        <div class="p-2 mb-2 {{grps.bgcolor}} text-white">
+      <div class="col-4" *ngFor="let grps of wrapper.msgSaida[0]" >
+        <div class="p-2 mb-2 {{grps.bgcolor}} text-white" (click)="mercadoriaGrupo(grps.id)">
           {{ grps.descricao }}
         </div>
       </div>

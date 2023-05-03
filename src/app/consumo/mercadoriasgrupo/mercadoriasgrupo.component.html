@@ -1,9 +1,10 @@
 <div class="card mt-2">
-  <h5 class="card-header">Mais vendidos</h5>
+  <h5 class="card-header">Mercadorias do Grupo : {{ wrapper.msgSaida[0][0].grupo.descricao}} </h5>
   <div class="card-body">
     <div class="row">
       <div class="col-4" *ngFor="let merc of wrapper.msgSaida[0]">
-        <div class="p-2 mb-2 bg-primary text-white d-flex justify-content-between align-items-center">
+        <div class="p-2 mb-2 {{merc.grupo.bgcolor}} text-white d-flex justify-content-between align-items-center"
+          (click)="getConsumo(merc.id)">
           <span>{{ merc.nome }}</span>
           <span>R{{ merc.valor | currency}}</span>
         </div>
@@ -11,4 +12,3 @@
     </div>
   </div>
 </div>
-

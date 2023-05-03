@@ -1,0 +1,9 @@
+.parent {
+    height: 200px; /* definir uma altura para a div pai */
+    border: 1px solid black; /* apenas para visualização */
+  }
+
+  .child {
+    width: 50%; /* definir uma largura para a div filho */
+    border: 1px solid red; /* apenas para visualização */
+  }

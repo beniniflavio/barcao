@@ -30,13 +30,7 @@
 
         <div class="btn-group-vertical mt-5" role="group" aria-label="Vertical button group">
             <button type="button" class="btn btn-info mt-2" [routerLink]="['Consumo']">Adcionar</button>
-            <button type="button" class="btn btn-success position-relative mt-2" [routerLink]="['Carrinho']">
-              Carrinho
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                0+
-                <span class="visually-hidden">Itens no carrinhp</span>
-              </span>
-            </button>
+            <app-carrinho></app-carrinho>
         </div>
 
       </div>

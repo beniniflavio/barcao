@@ -15,4 +15,8 @@ export class NotficationService {
   showInfo(message: any, title: any) {
     this.toastr.info(message, title);
   }
+
+  showError(message: any, title: any) {
+    this.toastr.error(message, title);
+  }
 }
