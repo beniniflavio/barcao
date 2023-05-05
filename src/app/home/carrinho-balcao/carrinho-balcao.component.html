@@ -1,4 +1,4 @@
-<angular-tag-cloud [config]="options" [data]="data" [class.custom-css]='true'></angular-tag-cloud>
+<!-- <angular-tag-cloud [config]="options" [data]="data" [class.custom-css]='true'></angular-tag-cloud> -->
 
 <div class="card mt-2">
   <h5 class="card-header">Itens do carrinho</h5>
@@ -22,27 +22,34 @@
     <div class="card-body">
       <div class="row">
         <div class="col">
-          <table class="table">
+          <table class="table table-dark table-striped">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Mercadoria</th>
                 <th scope="col">Quantidade</th>
                 <th scope="col">Preço</th>
-                <th scope="col">sub total</th>
+                <th scope="col">Sub-total</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let rsms of wrapper.msgSaida[0].resumo">
-                <th scope="row">1</th>
+              <tr *ngFor="let rsms of wrapper.msgSaida[0].resumo; index as i">
+                <th scope="row">{{ i+1}}</th>
                 <td>{{ rsms.mercadoria }}</td>
                 <td class="text-center">{{ rsms.quantidade }}</td>
-                <td class="text-end">{{ rsms.preco | currency}}</td>
-                <td class="text-end">{{ rsms.quantidade *  rsms.preco |currency }}</td>
+                <td class="text-end">R{{ rsms.preco | currency}}</td>
+                <td class="text-end">R{{ rsms.quantidade *  rsms.preco |currency }}</td>
               </tr>
-
+              <tr>
+                <th scope="row" colspan="3">*</th>
+                <td class="text-end">Total</td>
+                <td class="text-end">R{{  wrapper.msgSaida[0].total | currency}}</td>
+              </tr>
             </tbody>
           </table>
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="button" (click)="finalizarBalcao()">Finalizar</button>
         </div>
       </div>
     </div>

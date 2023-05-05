@@ -30,6 +30,10 @@ import { MercadoriasgrupoComponent } from './consumo/mercadoriasgrupo/mercadoria
 import { VendaMercadoriaComponent } from './consumo/venda-mercadoria/venda-mercadoria.component';
 import { CarrinhoComponent } from './carrinho/carrinho.component';
 import { CarrinhoBalcaoComponent } from './home/carrinho-balcao/carrinho-balcao.component';
+import VendaComponent from './home/venda/venda.component';
+import { DynamicFormInputComponent } from './shared/dynamic-form-input/dynamic-form-input.component';
+import { TotalizacaoComponent } from './home/venda/totalizacao/totalizacao.component';
+
 
 @NgModule({
   declarations: [
@@ -51,6 +55,9 @@ import { CarrinhoBalcaoComponent } from './home/carrinho-balcao/carrinho-balcao.
     VendaMercadoriaComponent,
     CarrinhoComponent,
     CarrinhoBalcaoComponent,
+    VendaComponent,
+    DynamicFormInputComponent,
+    TotalizacaoComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CarrinhoBalcaoService } from './carrinho-balcao.service';
 import { CloudData, CloudOptions } from 'angular-tag-cloud-module';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-carrinho-balcao',
@@ -12,7 +13,8 @@ export class CarrinhoBalcaoComponent implements OnInit {
   mensagem: any;
   success: any;
 
-  constructor(private service: CarrinhoBalcaoService,
+  constructor(private service: AdminService,
+    private router: Router
     ) {}
     options: CloudOptions = {
       // if width is between 0 and 1 it will be set to the width of the upper element multiplied by the value
@@ -47,5 +49,9 @@ export class CarrinhoBalcaoComponent implements OnInit {
         this.mensagem = 'Consumos obtidos com sucesso';
       },
     });
+  }
+
+  finalizarBalcao() {
+    this.router.navigate([ 'Carrinho/Venda' ]);
   }
 }
