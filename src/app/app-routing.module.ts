@@ -11,6 +11,7 @@ import { ConsumoComponent } from './consumo/consumo.component';
 import { MercadoriasgrupoComponent } from './consumo/mercadoriasgrupo/mercadoriasgrupo.component';
 import { VendaMercadoriaComponent } from './consumo/venda-mercadoria/venda-mercadoria.component';
 import { CarrinhoBalcaoComponent } from './home/carrinho-balcao/carrinho-balcao.component';
+import VendaComponent from './home/venda/venda.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent },
@@ -24,6 +25,8 @@ const routes: Routes = [
   {path:'Grupo/:id', component: MercadoriasgrupoComponent},
   {path:'Consumo/:id', component: VendaMercadoriaComponent},
   {path:'Carrinho', component: CarrinhoBalcaoComponent},
+  {path:'Carrinho/Venda', component: VendaComponent},
+
 
 ];
 
