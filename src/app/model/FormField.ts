@@ -7,6 +7,9 @@ export class FormField<T> {
   order: number;
   controlType: string;
   type: string;
+  amount:string|undefined;
+  price:string|undefined;
+  subtotal:string|undefined;
   options: { key: string; value: string }[];
 
   constructor(
@@ -19,6 +22,9 @@ export class FormField<T> {
       order?: number;
       controlType?: string;
       type?: string;
+      amount?:string|undefined;
+      price?:string|undefined;
+      subtotal?:string|undefined;
       options?: { key: string; value: string }[];
     } = {}
   ) {
@@ -30,6 +36,9 @@ export class FormField<T> {
     this.order = options.order === undefined ? 1 : options.order;
     this.controlType = options.controlType || "";
     this.type = options.type || "";
+    this.amount = options.amount;
+    this.price = options.price;
+    this.subtotal =options.subtotal;
     this.options = options.options || [];
   }
 }

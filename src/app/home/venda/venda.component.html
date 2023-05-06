@@ -2,10 +2,7 @@
   <div class="card mt-2">
     <h5 class="card-header">Finalizar Consumo Balção</h5>
     <div class="card-body  d-flex justify-content-center">
-      <div class="col-8">
-        <div class="alert alert-primary" role="alert">
-          Total : {{ total | currency}}
-        </div>
+      <div class="col-4">
         <form class="row g-3" [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
           <div *ngFor="let formField of formFields" class="form-group">
@@ -17,6 +14,10 @@
             <button class="btn btn-primary" type="button" (click)="getTotaliza()">totalizacao</button>
           </div>
         </form>
+        <hr>
+        <div class="alert alert-primary" role="alert">
+          Total : {{ total | currency}}
+        </div>
       </div>
     </div>
   </div>

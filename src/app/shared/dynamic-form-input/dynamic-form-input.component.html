@@ -6,10 +6,20 @@
       <input class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type">
     </div>
 
+    <div *ngSwitchCase="'textbox_action'">
+      <label [attr.for]="input.key">{{input.label}}</label>
+      <input class="form-control" [formControlName]="input.key" min="0" max="{{input.amount}}"
+        [id]="input.key" [type]="input.type" (change)="getChange($event)">
+      <div class="form-text" id="{{input.key + 'helper'}}">
+        <span id="{{input.key + 'amount'}}">{{input.amount}} * </span>
+        <span id="{{input.key + 'price'}}">{{input.price}} =</span>
+        <span id="{{input.key + 'subtotal'}}">{{input.subtotal}} </span>
+        </div>
+    </div>
+
     <div *ngSwitchCase="'textbox'">
       <label [attr.for]="input.key">{{input.label}}</label>
-      <input class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type">
-
+      <input class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type" >
     </div>
 
     <div *ngSwitchCase="'dropdown'">

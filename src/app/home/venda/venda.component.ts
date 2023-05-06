@@ -5,7 +5,7 @@ import { NotficationService } from 'src/app/services/notfication.service';
 import { CarrinhoData } from 'src/app/model/data/CarrinhoData';
 import { ConsumoBalcao } from 'src/app/model/data/ConsumoBalcao';
 import { VendaService } from './venda.service';
-import { formatNumber } from '@angular/common'
+import { formatNumber } from '@angular/common';
 
 import { FormfieldControlService } from 'src/app/services/formfield-control.service';
 
@@ -16,7 +16,6 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
-
 
 @Component({
   selector: 'app-venda',
@@ -30,24 +29,23 @@ export default class VendaComponent implements OnInit {
   wrapper: any;
   mensagem: any;
   success: any;
-  wrappercarrinho:any;
-  totaliza:any;
-  total:any;
-
+  wrappercarrinho: any;
+  totaliza: any;
+  total: any;
 
   crrd = new CarrinhoData();
-
 
   constructor(
     private service: AdminService,
     private formfieldService: FormfieldControlService,
     private notification: NotficationService,
-    private vendaService:VendaService  ) {}
+    private vendaService: VendaService
+  ) {}
 
   ngOnInit(): void {
     this.getCarrinho();
-    this.totaliza='F';
-    this.total =0.0;
+    this.totaliza = 'F';
+    this.total = 0.0;
   }
 
   getCarrinho() {
@@ -55,6 +53,7 @@ export default class VendaComponent implements OnInit {
       next: (result: any) => {
         // this.usersList?.push(result);
         this.wrapper = result;
+        this.total = this.formatvalor(this.wrapper.msgSaida[0].total);
         this.getConsumos(this.wrapper);
       },
       error: (err: any) => {
@@ -73,16 +72,21 @@ export default class VendaComponent implements OnInit {
       next: (result: any) => {
         // this.usersList?.push(result);
         this.wrappercarrinho = result;
-
       },
       error: (err: any) => {
         this.mensagem = 'Nenhuma mercadoria disponível';
-        this.notification.showError('Erro no registro da venda', 'Venda Balcão');
+        this.notification.showError(
+          'Erro no registro da venda',
+          'Venda Balcão'
+        );
       },
       complete: () => {
         this.success = true;
         this.mensagem = 'mercadoria obtida com sucesso';
-        this.notification.showSuccess('Venda Registra com Sucesso', 'Venda Balcão');
+        this.notification.showSuccess(
+          'Venda Registra com Sucesso',
+          'Venda Balcão'
+        );
       },
     });
   }
@@ -102,55 +106,67 @@ export default class VendaComponent implements OnInit {
     this.formFields.push(input);
     /*this.payLoad= '...carregando'; */
     consumos.msgSaida[0].resumo.forEach((element: any) => {
-      this.total +=  element.mercadoria.valor;
+      this.total += element.mercadoria.valor;
       input = new FormField();
-      input.controlType = 'textbox';
-      input.key = element.mercadoria.id,
-      input.label = element.mercadoria + ' - ' + this.formatvalor(element.mercadoria.valor),
-      input.value = element.quantidade,
-      input.type = 'number';
-      input.required = false,
-      input.order = i++;
+      input.controlType = 'textbox_action';
+      (input.key = element.chave),
+        (input.label =
+          element.mercadoria +
+          ' - R$' +
+          this.formatvalor(element.preco) +
+          ' Máximo: ( ' +
+          element.quantidade +
+          ' )'),
+        (input.value = element.quantidade),
+        (input.type = 'number');
+      (input.required = false), (input.order = i++);
+      input.amount = element.quantidade;
+      input.price = this.formatvalor(element.preco);
+      input.subtotal = this.formatvalor(element.quantidade * element.preco);
       this.formFields.push(input);
     });
     this.formulario = this.formfieldService.toFormGroup(this.formFields);
   }
 
-  getTotaliza(){
-    this.getCarrinhoBalcao2();
+  getTotaliza() {
+    this.total = this.getTotalizaCarrinho();
 
   }
 
-  formatvalor( valor:number) {
-    return formatNumber(valor,"en-US", "1.2-3")
+  formatvalor(valor: number) {
+    return formatNumber(valor, 'en-US', '1.2-3');
   }
-
 
   getCarrinhoBalcao() {
-    this.total = 0;
     let key;
     let i = 0;
     for (key in this.formulario.getRawValue()) {
-      if (i == 0 ) {
-        this.crrd.chave='';
+      if (i == 0) {
+        this.crrd.chave = '';
         this.crrd.consumidor = this.formulario.getRawValue()[key];
       } else {
         const csbl = new ConsumoBalcao();
         csbl.chave = key;
         csbl.valor = this.formulario.getRawValue()[key];
-        this.total +=  this.formulario.getRawValue()[key];
+        this.total += this.formulario.getRawValue()[key];
         this.crrd.consumos.push(csbl);
       }
       i++;
     }
   }
-  // this.wrapper.msgSaida[0].consumos.find(f=> f.id==element);
 
-  getCarrinhoBalcao2() {
-    // let key;
-    // for (key in this.formulario.getRawValue()) {
-      // this.wrapper.msgSaida[0].consumos.find(f=> f.id==key)
-    // };
-
+  getTotalizaCarrinho() {
+    let key: any;
+    var tt:number=0.0;
+    for (key in this.formulario.value) {
+      if (key != 'Consumidor') {
+        let valor = document.getElementById(key + 'subtotal')!.textContent;
+        if (valor != null) {
+          tt += parseFloat(valor.trim());
+        }
+      }
+    }
+    return tt;
   }
+
 }
