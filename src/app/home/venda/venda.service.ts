@@ -6,7 +6,7 @@ import { CarrinhoData } from 'src/app/model/data/CarrinhoData';
   providedIn: 'root'
 })
 export class VendaService {
-  private readonly APICARRINHOBALCAO = 'http://192.168.0.172:8081/api/v1/Consumo/Carrinho/Balcao/Venda';
+  private readonly APICARRINHOBALCAO = 'http://localhost:8081/api/v1/Consumo/Carrinho/Balcao/Venda';
   constructor(private httpClient:HttpClient) { }
 
   addConsumoBalcao (carrinho:any) {
