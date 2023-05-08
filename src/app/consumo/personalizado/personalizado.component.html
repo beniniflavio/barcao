@@ -1,0 +1,141 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" (click)="sndConsumo(wrapper.msgSaida[0].grupo.id)">{{
+      wrapper.msgSaida[0].grupo.descricao }}</li>
+    <li class="breadcrumb-item active" aria-current="page">Personalizado</li>
+  </ol>
+</nav>
+<div class="card mt-2">
+  <h5 class="card-header">Consumo da Mercadoria : {{this.wrapper.msgSaida[0].nome }} R{{this.wrapper.msgSaida[0].valor |
+    currency }}</h5>
+  <div class="card-body">
+    <div class="row">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-8">
+            <div class="card mt-2">
+              <h5 class="card-header">Componentes</h5>
+              <div class="card-body">
+                <div class="row">
+                  <div class="container text-center">
+                    <div class="row">
+                      <div class="col-4" *ngFor="let comp of wrapper.msgSaida[0].componentes">
+                        <div class="p-2 mb-2 bg-primary text-white d-flex justify-content-between align-items-center"
+                          (click)="addComponente(comp)">
+                          <span>{{comp.descricao}} <i class="bi bi-cart-plus"></i></span>
+                          <span *ngIf="comp.valor != 0">R{{ comp.valor | currency}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mt-2">
+              <h5 class="card-header">Componentes Adicionais</h5>
+              <div class="card-body">
+                <div class="row">
+                  <div class="container text-center">
+                    <div class="row">
+                      <div class="col-4" *ngFor="let comp of this.wrapper.msgSaida[0].adicionais">
+                        <div class="p-2 mb-2 bg-primary text-white d-flex justify-content-between align-items-center"
+                          (click)="addComponente(comp)">
+                          <span>{{comp.descricao}}</span>
+                          <span *ngIf="comp.valor != 0">R{{ comp.valor | currency}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mt-2">
+              <h5 class="card-header">Totalização</h5>
+              <div class="card-body">
+                <div class="row">
+                  <div class="container">
+                    <div class="row text-start">
+                      <h2>Total: <span>R{{ wrapper.msgSaida[0].valor | currency }}</span></h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-grid gap-2 mt-1">
+              <button class="btn btn-primary btn-sm" type="button" [routerLink]="['/Consumo']">Cancelar</button>
+              <button class="btn btn-primary btn-sm" type="button"
+                (click)="sndFinalizar(wrapper.msgSaida[0])">Finalizar</button>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card mt-2">
+              <h5 class="card-header">Lista de componentes</h5>
+              <div class="card-body">
+                <div class="row">
+                  <div class="container text-center">
+                    <div class="row">
+                      <ol class="list-group list-group-numbered"
+                        *ngFor="let comp of this.wrapper.msgSaida[0].personalizado; let i = index">
+                        <ng-container *ngIf="comp.situacao ==0">
+                          <li class="list-group-item d-flex justify-content-between align-items-start"
+                            (click)="delComponente(i)">
+                            <div class="ms-2 me-auto">
+                              <div class="fw-bold">{{comp.descricao}} <i class="bi bi-trash"></i></div>
+                            </div>
+                            <span class="badge bg-success rounded-pill">1</span>
+
+                          </li>
+                        </ng-container>
+                        <ng-container *ngIf="comp.situacao ==1">
+                          <li class="list-group-item d-flex justify-content-between align-items-start"
+                            (click)="recComponente(i)">
+                            <div class="ms-2 me-auto">
+                              <div class="fw-bold">{{comp.descricao}} <i class="bi bi-cart-check-fill"></i></div>
+                            </div>
+                            <span class="badge bg-danger rounded-pill">0</span>
+                          </li>
+                        </ng-container>
+
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col">
+              <div class="card mt-2">
+                <h5 class="card-header">Mensagens</h5>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="container text-center">
+                      <div class="row">
+                        <span class="badge rounded-pill text-bg-primary">Primary</span>
+                        <span class="badge rounded-pill text-bg-secondary">Secondary</span>
+                        <span class="badge rounded-pill text-bg-success">Success</span>
+                        <span class="badge rounded-pill text-bg-danger">Danger</span>
+                        <span class="badge rounded-pill text-bg-warning">Warning</span>
+                        <span class="badge rounded-pill text-bg-info">Info</span>
+                        <span class="badge rounded-pill text-bg-light">Light</span>
+                        <span class="badge rounded-pill text-bg-dark">Dark</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- <div class="col-4" *ngFor="let comp of wrapper.msgSaida[0].componentes">
+    <div class="p-2 mb-2 {{comp.grupo.bgcolor}} text-white d-flex justify-content-between align-items-center">
+      <span>{{comp.descricao }} a</span>
+      <span>R{{comp.valor | currency}}</span>
+    </div>
+  </div> -->

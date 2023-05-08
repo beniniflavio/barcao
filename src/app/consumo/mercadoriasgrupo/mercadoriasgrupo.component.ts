@@ -30,7 +30,7 @@ export class MercadoriasgrupoComponent implements OnInit {
   }
 
   getMercadoriasGrupo() {
-    this.notification.showInfo('buscando grupos', 'consumo');
+    // this.notification.showInfo('buscando grupos', 'consumo');
 
     this.service.getMercadoriasGrupos(this.idhash).subscribe({
       next: (result: any) => {
@@ -49,5 +49,8 @@ export class MercadoriasgrupoComponent implements OnInit {
 
   getConsumo(idhash: any) {
     this.router.navigate(['Consumo/' + idhash]);
+  }
+  getConsumoPersonalizado(idhash: any) {
+    this.router.navigate(['Consumo/Personalizado/' + idhash]);
   }
 }

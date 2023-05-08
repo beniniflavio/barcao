@@ -33,6 +33,7 @@ import { CarrinhoBalcaoComponent } from './home/carrinho-balcao/carrinho-balcao.
 import VendaComponent from './home/venda/venda.component';
 import { DynamicFormInputComponent } from './shared/dynamic-form-input/dynamic-form-input.component';
 import { TotalizacaoComponent } from './home/venda/totalizacao/totalizacao.component';
+import { PersonalizadoComponent } from './consumo/personalizado/personalizado.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { TotalizacaoComponent } from './home/venda/totalizacao/totalizacao.compo
     VendaComponent,
     DynamicFormInputComponent,
     TotalizacaoComponent,
+    PersonalizadoComponent,
   ],
   imports: [
     BrowserModule,
