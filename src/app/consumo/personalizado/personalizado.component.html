@@ -1,12 +1,12 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item" (click)="sndConsumo(wrapper.msgSaida[0].grupo.id)">{{
-      wrapper.msgSaida[0].grupo.descricao }}</li>
+    <li class="breadcrumb-item" (click)="sndConsumo(wrapper.msgSaida[0].grupoid)">{{
+      wrapper.msgSaida[0].grupo }}</li>
     <li class="breadcrumb-item active" aria-current="page">Personalizado</li>
   </ol>
 </nav>
 <div class="card mt-2">
-  <h5 class="card-header">Consumo da Mercadoria : {{this.wrapper.msgSaida[0].nome }} R{{this.wrapper.msgSaida[0].valor |
+  <h5 class="card-header">Consumo da Mercadoria : {{wrapper.msgSaida[0].nome }} - R{{wrapper.msgSaida[0].subtotal |
     currency }}</h5>
   <div class="card-body">
     <div class="row">
@@ -19,11 +19,11 @@
                 <div class="row">
                   <div class="container text-center">
                     <div class="row">
-                      <div class="col-4" *ngFor="let comp of wrapper.msgSaida[0].componentes">
+                      <div class="col-4" *ngFor="let mrcm of wrapper.msgSaida[0].componentes">
                         <div class="p-2 mb-2 bg-primary text-white d-flex justify-content-between align-items-center"
-                          (click)="addComponente(comp)">
-                          <span>{{comp.descricao}} <i class="bi bi-cart-plus"></i></span>
-                          <span *ngIf="comp.valor != 0">R{{ comp.valor | currency}}</span>
+                          (click)="addComponente(mrcm)">
+                          <span>{{mrcm.descricao}} <i class="bi bi-cart-plus"></i></span>
+                          <span *ngIf="mrcm.valor != 0">R{{ mrcm.valor | currency}}</span>
                         </div>
                       </div>
                     </div>
@@ -37,11 +37,11 @@
                 <div class="row">
                   <div class="container text-center">
                     <div class="row">
-                      <div class="col-4" *ngFor="let comp of this.wrapper.msgSaida[0].adicionais">
+                      <div class="col-4" *ngFor="let mrad of wrapper.msgSaida[0].adicionais">
                         <div class="p-2 mb-2 bg-primary text-white d-flex justify-content-between align-items-center"
-                          (click)="addComponente(comp)">
-                          <span>{{comp.descricao}}</span>
-                          <span *ngIf="comp.valor != 0">R{{ comp.valor | currency}}</span>
+                          (click)="addComponente(mrad)">
+                          <span>{{mrad.descricao}}</span>
+                          <span *ngIf="mrad.valor != 0">R{{ mrad.valor | currency}}</span>
                         </div>
                       </div>
                     </div>
@@ -54,17 +54,16 @@
               <div class="card-body">
                 <div class="row">
                   <div class="container">
-                    <div class="row text-start">
-                      <h2>Total: <span>R{{ wrapper.msgSaida[0].valor | currency }}</span></h2>
-                    </div>
+                    <p class="left-text h2">Total: R{{wrapper.msgSaida[0].total | currency }}</p>
+                    <p class="right-text h3">Adicionais: R{{wrapper.msgSaida[0].total_adicionais | currency }}</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="d-grid gap-2 mt-1">
-              <button class="btn btn-primary btn-sm" type="button" [routerLink]="['/Consumo']">Cancelar</button>
-              <button class="btn btn-primary btn-sm" type="button"
-                (click)="sndFinalizar(wrapper.msgSaida[0])">Finalizar</button>
+            <div class="d-grid gap-1 mt-1">
+              <button class="btn btn-secondary btn-sm" type="button" [routerLink]="['/Consumo']">Cancelar</button>
+              <button class="btn btn-primary btn-sm" type="button" (click)="openFormModal()">Consumidor</button>
+              <button class="btn btn-primary btn-sm" type="button" (click)="sndFinalizar()">Finalizar</button>
             </div>
           </div>
           <div class="col-4">
@@ -75,7 +74,7 @@
                   <div class="container text-center">
                     <div class="row">
                       <ol class="list-group list-group-numbered"
-                        *ngFor="let comp of this.wrapper.msgSaida[0].personalizado; let i = index">
+                        *ngFor="let comp of this.wrapper.msgSaida[0].ingredientes; let i = index">
                         <ng-container *ngIf="comp.situacao ==0">
                           <li class="list-group-item d-flex justify-content-between align-items-start"
                             (click)="delComponente(i)">
@@ -92,7 +91,7 @@
                             <div class="ms-2 me-auto">
                               <div class="fw-bold">{{comp.descricao}} <i class="bi bi-cart-check-fill"></i></div>
                             </div>
-                            <span class="badge bg-danger rounded-pill">0</span>
+                            <span class="badge bg-danger rounded-pill">1</span>
                           </li>
                         </ng-container>
 
@@ -108,16 +107,12 @@
                 <h5 class="card-header">Mensagens</h5>
                 <div class="card-body">
                   <div class="row">
-                    <div class="container text-center">
+                    <div class="container text-start">
                       <div class="row">
-                        <span class="badge rounded-pill text-bg-primary">Primary</span>
-                        <span class="badge rounded-pill text-bg-secondary">Secondary</span>
-                        <span class="badge rounded-pill text-bg-success">Success</span>
-                        <span class="badge rounded-pill text-bg-danger">Danger</span>
-                        <span class="badge rounded-pill text-bg-warning">Warning</span>
-                        <span class="badge rounded-pill text-bg-info">Info</span>
-                        <span class="badge rounded-pill text-bg-light">Light</span>
-                        <span class="badge rounded-pill text-bg-dark">Dark</span>
+                        <div class="col">
+                          <app-mensagem *ngFor="let mensagem of wrapperMSG.msgSaida[0]; let i = index "
+                            [wrapper]=mensagem> [index] = i </app-mensagem>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -134,8 +129,50 @@
 </div>
 
 <!-- <div class="col-4" *ngFor="let comp of wrapper.msgSaida[0].componentes">
-    <div class="p-2 mb-2 {{comp.grupo.bgcolor}} text-white d-flex justify-content-between align-items-center">
-      <span>{{comp.descricao }} a</span>
-      <span>R{{comp.valor | currency}}</span>
+  <div class="p-2 mb-2 {{comp.grupo.bgcolor}} text-white d-flex justify-content-between align-items-center">
+    <span>{{comp.descricao }} a</span>
+    <span>R{{comp.valor | currency}}</span>
+  </div>
+</div> -->
+
+
+<!-- <span class="badge rounded-pill text-bg-primary">Primary</span>
+                        <span class="badge rounded-pill text-bg-secondary">Secondary</span>
+                        <span class="badge rounded-pill text-bg-success">Success</span>
+                        <span class="badge rounded-pill text-bg-danger">Danger</span>
+                        <span class="badge rounded-pill text-bg-warning">Warning</span>
+                        <span class="badge rounded-pill text-bg-info">Info</span>
+                        <span class="badge rounded-pill text-bg-light">Light</span>
+                        <span class="badge rounded-pill text-bg-dark">Dark</span> -->
+
+
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Feito para ?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-auto">
+            <label for="staticEmail2" class="visually-hidden">Consumidor</label>
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Consumidor">
+          </div>
+          <div class="col-auto">
+            <label for="consumidor" class="visually-hidden">Consumidor</label>
+            <input type="text" class="form-control" id="consumidor" placeholder="nome da pessoa">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Sair
+        </button>
+        <button type="submit" class="btn btn-primary" (click)="saveSomeThing()">
+          Aplicar alterações
+        </button>
+      </div>
     </div>
-  </div> -->
+  </div>
+</div>
