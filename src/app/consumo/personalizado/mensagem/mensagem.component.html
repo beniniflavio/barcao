@@ -1,0 +1,14 @@
+
+<ng-container *ngIf="wrapper.situacao==0">
+  <div class="p-1 mb-1 d-flex justify-content-between align-items-center h6" (click)="setMensagem(wrapper)">
+    <span>{{ wrapper.descricao}}</span>
+    <span><i class="bi bi-bookmark"></i></span>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="wrapper.situacao==1">
+  <div class="p-1 mb-1 d-flex bg-danger justify-content-between align-items-center h6" (click)="setMensagem(wrapper)">
+    <span>{{ wrapper.descricao}}</span>
+    <span><i class="bi bi-bookmark-check "></i></span>
+  </div>
+</ng-container>

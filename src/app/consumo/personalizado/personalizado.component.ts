@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { PersonalizadoService } from './personalizado.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MensagemService } from './mensagem/mensagem.service';
+import { NgForm } from '@angular/forms';
+
+declare var window: any;
 
 @Component({
   selector: 'app-personalizado',
@@ -10,21 +14,37 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 export class PersonalizadoComponent implements OnInit {
   wrapper: any;
   wrapperGrupo: any;
+  wrapperMRCM: any;
+  wrapperMRAD: any;
+  wrapperMSG: any;
   mensagem: any;
   success: any;
   idhash: any;
+  formModal: any;
+  consumidor:any | null;
+
+  @Input() bodyText=" Modal";
 
   constructor(
     private service: PersonalizadoService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private msg_service: MensagemService,
   ) {}
 
   ngOnInit(): void {
+
+    this.formModal = new window.bootstrap.Modal(
+      document.getElementById('myModal')
+    );
+
     this.route.params.subscribe((params: Params) => {
       this.idhash = params['id'];
     });
     this.getMercadoria();
+    //this.getMercadoriaComponente(this.idhash);
+    // this.getMercadoriaAdicional(this.idhash);
+    this.getMensagems();
   }
   getMercadoria() {
     this.service.getMercadoria(this.idhash).subscribe({
@@ -42,23 +62,105 @@ export class PersonalizadoComponent implements OnInit {
     });
   }
 
+  getMercadoriaComponente(idhash: any) {
+    this.service.getMercadoriaComponentes(idhash).subscribe({
+      next: (result: any) => {
+        // this.usersList?.push(result);
+        this.wrapperMRCM = result;
+      },
+      error: (err: any) => {
+        this.mensagem = 'Nenhuma mercadoria disponível';
+      },
+      complete: () => {
+        this.success = true;
+        this.mensagem = 'mercadoria obtida com sucesso';
+      },
+    });
+  }
+
+  getMercadoriaAdicional(idhash: any) {
+    this.service.getMercadoriaAdicional(idhash).subscribe({
+      next: (result: any) => {
+        // this.usersList?.push(result);
+        this.wrapperMRAD = result;
+      },
+      error: (err: any) => {
+        this.mensagem = 'Nenhuma mercadoria disponível';
+      },
+      complete: () => {
+        this.success = true;
+        this.mensagem = 'mercadoria Adicional obtida com sucesso';
+      },
+    });
+  }
+
   addComponente(comp: any) {
-    this.wrapper.msgSaida[0].personalizado.push(comp);
+    this.wrapper.msgSaida[0].ingredientes.push(comp);
+    this.totalizacao();
   }
 
-  delComponente(idx :any) {
-    this.wrapper.msgSaida[0].personalizado[idx].situacao =1;
+  delComponente(idx: any) {
+    this.wrapper.msgSaida[0].ingredientes[idx].situacao = 1;
+    this.totalizacao();
   }
 
-  recComponente(idx :any) {
-    this.wrapper.msgSaida[0].personalizado[idx].situacao =0;
+  recComponente(idx: any) {
+    this.wrapper.msgSaida[0].ingredientes[idx].situacao = 0;
+    this.totalizacao();
   }
 
-  sndConsumo(idhash:any) {
-    this.router.navigate( ['Grupo/'+ idhash]);
+  sndConsumo(idhash: any) {
+    this.router.navigate(['Grupo/' + idhash]);
   }
-  sndFinalizar(item:any){
+  sndFinalizar() {
     let a = 0;
   }
+
+  totalizacao() {
+    var total = 0;
+    var subtotal = 0;
+    for (
+      let index = 0;
+      index < this.wrapper.msgSaida[0].ingredientes.length;
+      index++
+    ) {
+      if (
+        this.wrapper.msgSaida[0].ingredientes[index].tipo == 1 &&
+        this.wrapper.msgSaida[0].ingredientes[index].situacao == 0
+      ) {
+        subtotal += this.wrapper.msgSaida[0].ingredientes[index].valor;
+      }
+    }
+    this.wrapper.msgSaida[0].total_adicionais = subtotal;
+    this.wrapper.msgSaida[0].total =
+      this.wrapper.msgSaida[0].subtotal +
+      this.wrapper.msgSaida[0].total_adicionais;
+  }
+
+  getMensagems( ) {
+      return this.msg_service.getMensagens().subscribe({
+        next: (result: any) => {
+          // this.usersList?.push(result);
+          this.wrapperMSG = result;
+        },
+        error: (err: any) => {
+          this.mensagem = 'Nenhuma mensagem disponível';
+        },
+        complete: () => {
+          this.success = true;
+          this.mensagem = 'mensagens obtida com sucesso';
+        },
+      });
+  }
+
+  openFormModal() {
+    this.formModal.show();
+  }
+  saveSomeThing() {
+    // confirm or save something
+    this.formModal.hide();
+    this.wrapper.msgSaida[0].consumidor =(document.getElementById('consumidor') as HTMLInputElement).value;
+  }
+
 
 }

@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
 import { TagCloudComponent } from 'angular-tag-cloud-module';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +32,7 @@ import VendaComponent from './home/venda/venda.component';
 import { DynamicFormInputComponent } from './shared/dynamic-form-input/dynamic-form-input.component';
 import { TotalizacaoComponent } from './home/venda/totalizacao/totalizacao.component';
 import { PersonalizadoComponent } from './consumo/personalizado/personalizado.component';
-
+import { MensagemComponent } from './consumo/personalizado/mensagem/mensagem.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +58,7 @@ import { PersonalizadoComponent } from './consumo/personalizado/personalizado.co
     DynamicFormInputComponent,
     TotalizacaoComponent,
     PersonalizadoComponent,
+    MensagemComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,9 +73,11 @@ import { PersonalizadoComponent } from './consumo/personalizado/personalizado.co
         closeButton: true,
         progressBar: true,
     }),
-    TagCloudComponent
+    TagCloudComponent,
+
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
+
