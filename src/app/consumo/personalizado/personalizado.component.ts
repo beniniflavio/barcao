@@ -21,19 +21,18 @@ export class PersonalizadoComponent implements OnInit {
   success: any;
   idhash: any;
   formModal: any;
-  consumidor:any | null;
+  consumidor: any | null;
 
-  @Input() bodyText=" Modal";
+  @Input() bodyText = ' Modal';
 
   constructor(
     private service: PersonalizadoService,
     private route: ActivatedRoute,
     private router: Router,
-    private msg_service: MensagemService,
+    private msg_service: MensagemService
   ) {}
 
   ngOnInit(): void {
-
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('myModal')
     );
@@ -113,6 +112,8 @@ export class PersonalizadoComponent implements OnInit {
     this.router.navigate(['Grupo/' + idhash]);
   }
   sndFinalizar() {
+    this.openFormModal();
+
     let a = 0;
   }
 
@@ -137,30 +138,40 @@ export class PersonalizadoComponent implements OnInit {
       this.wrapper.msgSaida[0].total_adicionais;
   }
 
-  getMensagems( ) {
-      return this.msg_service.getMensagens().subscribe({
-        next: (result: any) => {
-          // this.usersList?.push(result);
-          this.wrapperMSG = result;
-        },
-        error: (err: any) => {
-          this.mensagem = 'Nenhuma mensagem disponível';
-        },
-        complete: () => {
-          this.success = true;
-          this.mensagem = 'mensagens obtida com sucesso';
-        },
-      });
+  getMensagems() {
+    return this.msg_service.getMensagens().subscribe({
+      next: (result: any) => {
+        // this.usersList?.push(result);
+        this.wrapperMSG = result;
+      },
+      error: (err: any) => {
+        this.mensagem = 'Nenhuma mensagem disponível';
+      },
+      complete: () => {
+        this.success = true;
+        this.mensagem = 'mensagens obtida com sucesso';
+      },
+    });
   }
 
   openFormModal() {
+    var com = (document.getElementById('consumidor') as HTMLInputElement)
+    com.value = this.wrapper.msgSaida[0].consumidor;
     this.formModal.show();
   }
   saveSomeThing() {
     // confirm or save something
     this.formModal.hide();
-    this.wrapper.msgSaida[0].consumidor =(document.getElementById('consumidor') as HTMLInputElement).value;
+    this.wrapper.msgSaida[0].consumidor = (
+      document.getElementById('consumidor') as HTMLInputElement
+    ).value;
+    this.service.setFinalizaConsumo(this.wrapper.msgSaida[0]);
   }
 
-
+  saveConsumidor() {
+    this.formModal.hide();
+    this.wrapper.msgSaida[0].consumidor = (
+      document.getElementById('consumidor') as HTMLInputElement
+    ).value;
+  }
 }
