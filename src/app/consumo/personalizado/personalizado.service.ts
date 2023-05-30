@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConsumoPersonalizadoData } from 'src/app/model/data/ConsumoPersonalizadoData';
+import { IngredienteData } from 'src/app/model/data/IngredienteData';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class PersonalizadoService {
   private readonly APICONSUMOPERSONALIZADO = 'http://localhost:8081/api/v1/Consumo/Insert/Personalizado';
 
   cmPer =new ConsumoPersonalizadoData();
+
 
   constructor(private httpClient: HttpClient) {}
 
@@ -31,7 +33,7 @@ export class PersonalizadoService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type':  'application/json; charset=utf-8'
       })
     };
 
@@ -39,10 +41,19 @@ export class PersonalizadoService {
     this.cmPer.consumidor = c.consumidor;
     this.cmPer.total = c.total;
 
+    let ings:IngredienteData[]=[];
     for (let index = 0; index < c.ingredientes.length; index++) {
-      this.cmPer.ingredientes.push(c.ingredientes[index]);
+      let cmIng = new IngredienteData();
+
+      cmIng.chave = c.ingredientes[index].chave;
+      cmIng.situacao = c.ingredientes[index].situacao;
+      cmIng.tipo=  c.ingredientes[index].tipo;
+
+      ings.push(cmIng);
 
     }
+
+    this.cmPer.ingredientes = ings;
 
 
     const body= JSON.stringify(this.cmPer);

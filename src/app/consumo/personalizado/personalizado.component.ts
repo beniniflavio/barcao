@@ -3,6 +3,7 @@ import { PersonalizadoService } from './personalizado.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MensagemService } from './mensagem/mensagem.service';
 import { NgForm } from '@angular/forms';
+import { NotficationService } from 'src/app/services/notfication.service';
 
 declare var window: any;
 
@@ -29,7 +30,8 @@ export class PersonalizadoComponent implements OnInit {
     private service: PersonalizadoService,
     private route: ActivatedRoute,
     private router: Router,
-    private msg_service: MensagemService
+    private msg_service: MensagemService,
+    private notification: NotficationService
   ) {}
 
   ngOnInit(): void {
@@ -143,6 +145,7 @@ export class PersonalizadoComponent implements OnInit {
       next: (result: any) => {
         // this.usersList?.push(result);
         this.wrapperMSG = result;
+        this.notification.showInfo('buscando grupos', 'consumo');
       },
       error: (err: any) => {
         this.mensagem = 'Nenhuma mensagem disponível';
@@ -155,7 +158,7 @@ export class PersonalizadoComponent implements OnInit {
   }
 
   openFormModal() {
-    var com = (document.getElementById('consumidor') as HTMLInputElement)
+    var com = document.getElementById('consumidor') as HTMLInputElement;
     com.value = this.wrapper.msgSaida[0].consumidor;
     this.formModal.show();
   }
@@ -165,7 +168,26 @@ export class PersonalizadoComponent implements OnInit {
     this.wrapper.msgSaida[0].consumidor = (
       document.getElementById('consumidor') as HTMLInputElement
     ).value;
-    this.service.setFinalizaConsumo(this.wrapper.msgSaida[0]);
+    this.service.setFinalizaConsumo(this.wrapper.msgSaida[0]).subscribe({
+      next: (result: any) => {
+        // this.usersList?.push(result);
+        this.wrapperMSG = result;
+        this.notification.showSuccess(
+          'Consumo Registrado com sucesso',
+          'consumo'
+        );
+
+          this.router.navigate(['Consumo/']);
+
+      },
+      error: (err: any) => {
+        this.mensagem = 'Nenhuma mensagem disponível';
+      },
+      complete: () => {
+        this.success = true;
+        this.mensagem = 'mensagens obtida com sucesso';
+      },
+    });
   }
 
   saveConsumidor() {
