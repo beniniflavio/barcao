@@ -1,6 +1,8 @@
+import { IngredienteData } from "./IngredienteData";
+
 export class ConsumoPersonalizadoData {
   chave:string ='' ;
   consumidor:string = '';
-  ingredientes:String[]=[];
+  ingredientes:IngredienteData[]=[];
   total:number=0;
 }
