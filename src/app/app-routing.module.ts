@@ -13,6 +13,9 @@ import { VendaMercadoriaComponent } from './consumo/venda-mercadoria/venda-merca
 import { CarrinhoBalcaoComponent } from './home/carrinho-balcao/carrinho-balcao.component';
 import VendaComponent from './home/venda/venda.component';
 import { PersonalizadoComponent } from './consumo/personalizado/personalizado.component';
+import { FechamentoComponent } from './home/fechamento/fechamento.component';
+import { ConsumoMesaComponent } from './home/mesa/consumo-mesa/consumo-mesa.component';
+
 
 const routes: Routes = [
   {path:'', component: HomeComponent },
@@ -27,7 +30,11 @@ const routes: Routes = [
   {path:'Consumo/Personalizado/:id', component: PersonalizadoComponent},
   {path:'Consumo/:id', component: VendaMercadoriaComponent},
   {path:'Carrinho', component: CarrinhoBalcaoComponent},
-  {path:'Carrinho/Venda', component: VendaComponent},
+  {path:'Carrinho/Venda/Fechamento', component: FechamentoComponent},
+  {path:'Carrinho/Venda/Balcao', component: VendaComponent},
+  {path:'Carrinho/Venda/Mesa', component: ConsumoMesaComponent},
+
+
 
 
 
