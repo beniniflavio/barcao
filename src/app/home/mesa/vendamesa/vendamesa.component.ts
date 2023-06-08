@@ -4,10 +4,10 @@ import { FormField } from 'src/app/model/FormField';
 import { NotficationService } from 'src/app/services/notfication.service';
 import { CarrinhoData } from 'src/app/model/data/CarrinhoData';
 import { ConsumoBalcao } from 'src/app/model/data/ConsumoBalcao';
-import { VendaService } from './venda.service';
 import { formatNumber } from '@angular/common';
 import { Router } from '@angular/router';
-
+import { VendamesaService } from './vendamesa.service';
+import { MesasService } from 'src/app/services/mesas.service';
 
 import { FormfieldControlService } from 'src/app/services/formfield-control.service';
 
@@ -20,11 +20,12 @@ import {
 import { CurrencyPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-venda',
-  templateUrl: './venda.component.html',
-  styleUrls: ['./venda.component.css'],
+  selector: 'app-vendamesa',
+  templateUrl: './vendamesa.component.html',
+  styleUrls: ['./vendamesa.component.css']
 })
-export default class VendaComponent implements OnInit {
+export class VendamesaComponent implements OnInit {
+
   formulario!: FormGroup;
   @Input() formFields: FormField<string>[] = [];
 
@@ -35,14 +36,18 @@ export default class VendaComponent implements OnInit {
   totaliza: any;
   total: any;
 
+  wrapperMesa:any;
+
   crrd = new CarrinhoData();
+
 
   constructor(
     private service: AdminService,
     private formfieldService: FormfieldControlService,
     private notification: NotficationService,
-    private vendaService: VendaService,
-    private router: Router
+    private router: Router,
+    private msService : VendamesaService,
+    private mesService : MesasService
 
   ) {}
 
@@ -72,7 +77,7 @@ export default class VendaComponent implements OnInit {
 
   onSubmit() {
     this.getCarrinhoBalcao();
-    this.vendaService.addConsumoBalcao(this.crrd).subscribe({
+    this.msService.addConsumoMesa(this.crrd).subscribe({
       next: (result: any) => {
         // this.usersList?.push(result);
         this.wrappercarrinho = result;
@@ -205,5 +210,20 @@ export default class VendaComponent implements OnInit {
     });
   }
 
-}
+  getMesas() {
+    this.mesService.getMesas().subscribe({
+      next: (result: any) => {
+        // this.usersList?.push(result);
+        this.wrapperMesa = result;
+      },
+      error: (err: any) => {
+        this.mensagem = 'Nenhuma mesa disponível';
+      },
+      complete: () => {
+        this.success = true;
+        this.mensagem = 'Mesas obtidos com sucesso';
+      },
+    });
+  }
 
+}

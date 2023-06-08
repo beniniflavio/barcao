@@ -3,6 +3,7 @@ import { CloudData, CloudOptions } from 'angular-tag-cloud-module';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { NotficationService } from 'src/app/services/notfication.service';
+import { ContaRS } from 'src/app/model/data/ContaData';
 
 @Component({
   selector: 'app-carrinho-balcao',
@@ -57,6 +58,7 @@ export class CarrinhoBalcaoComponent implements OnInit {
       next: (result: any) => {
         // this.usersList?.push(result);
         this.wrapper = result;
+        this.wrapper.msgSaida[0].resumo = this.consolidaQuantidade(this.wrapper.msgSaida[0].resumo);
       },
       error: (err: any) => {
         this.mensagem = 'Nenhuma consumo disponível';
@@ -69,7 +71,7 @@ export class CarrinhoBalcaoComponent implements OnInit {
   }
 
   finalizarBalcao() {
-    this.router.navigate(['Carrinho/Venda']);
+    this.router.navigate(['Carrinho/Venda/Fechamento']);
   }
 
   delConsumo(c: any) {
@@ -104,5 +106,22 @@ export class CarrinhoBalcaoComponent implements OnInit {
         this.mensagem = 'Consumos obtidos com sucesso';
       },
     });
+  }
+
+  consolidaQuantidade(r:ContaRS[]) {
+      let resumo : ContaRS[] = [];
+      let merc = '';
+      let qtf = 0.0;
+      let sbt = 0.0;
+      r.forEach( element => {
+        if (element.mercadoria == merc) {
+          resumo[resumo.length-1].subtotal += element.subtotal
+          resumo[resumo.length-1].quantidade +=element.quantidade;
+        } else {
+            merc = element.mercadoria;
+            resumo.push(element);
+        }
+      })
+      return resumo;
   }
 }

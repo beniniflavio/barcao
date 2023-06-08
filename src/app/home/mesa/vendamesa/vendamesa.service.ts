@@ -4,11 +4,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class VendaService {
-  private readonly APICARRINHOBALCAO = 'http://localhost:8081/api/v1/Consumo/Carrinho/Balcao/Venda';
+export class VendamesaService {
+
+  private readonly APICARRINHOMESA = 'http://localhost:8081/api/v1/Consumo/Carrinho/Balcao/Venda';
   constructor(private httpClient:HttpClient) { }
 
-  addConsumoBalcao (carrinho:any) {
+  addConsumoMesa (carrinho:any) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -17,7 +18,8 @@ export class VendaService {
 
     const body= JSON.stringify(carrinho);
 
-    return this.httpClient.post<any> (this.APICARRINHOBALCAO, body, httpOptions);
+    return this.httpClient.post<any> (this.APICARRINHOMESA, body, httpOptions);
 
   }
+
 }

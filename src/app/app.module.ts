@@ -33,6 +33,9 @@ import { DynamicFormInputComponent } from './shared/dynamic-form-input/dynamic-f
 import { TotalizacaoComponent } from './home/venda/totalizacao/totalizacao.component';
 import { PersonalizadoComponent } from './consumo/personalizado/personalizado.component';
 import { MensagemComponent } from './consumo/personalizado/mensagem/mensagem.component';
+import { FechamentoComponent } from './home/fechamento/fechamento.component';
+import { PagamentoComponent } from './pagamento/pagamento.component';
+import { ConsumoMesaComponent } from './home/mesa/consumo-mesa/consumo-mesa.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +62,9 @@ import { MensagemComponent } from './consumo/personalizado/mensagem/mensagem.com
     TotalizacaoComponent,
     PersonalizadoComponent,
     MensagemComponent,
+    FechamentoComponent,
+    PagamentoComponent,
+    ConsumoMesaComponent,
   ],
   imports: [
     BrowserModule,
