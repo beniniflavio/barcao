@@ -1,20 +1,29 @@
-
-<app-filtro></app-filtro>
+<!-- <app-filtro></app-filtro> -->
 <div class="card mt-2">
   <h5 class="card-header">Mesas</h5>
   <div class="card-body">
     <div class="row row-cols-1 row-cols-md-4 g-6">
       <div class="col" *ngFor="let mesa of wrapper.msgSaida[0]">
-        <div class="card text-white bg-primary mb-3" style="max-width: 25rem;">
-          <div class="card-header">{{ mesa.identificacao}}</div>
-          <div class="card-body">
-            <h5 class="card-title">Status</h5>
-            <p class="card-text"></p>
+        <ng-container *ngIf="mesa.situacao==0">
+          <div class="card text-white bg-primary mb-3" style="max-width: 25rem;" (click)="getContaMesa(mesa.id)">
+            <div class="card-header">{{ mesa.identificacao}}</div>
+            <div class="card-body">
+              <h5 class="card-title">Status</h5>
+              <p class="card-text"></p>
+            </div>
           </div>
-        </div>
+        </ng-container>
+        <ng-container *ngIf="mesa.situacao!=0">
+          <div class="card text-white bg-danger mb-3" style="max-width: 25rem;" (click)="getContaMesa(mesa.id)">
+            <div class="card-header">{{ mesa.identificacao}}</div>
+            <div class="card-body">
+              <h5 class="card-title">Status</h5>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </ng-container>
+
       </div>
     </div>
   </div>
 </div>
-
-

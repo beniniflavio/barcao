@@ -61,8 +61,7 @@ export class ConsumoMesaComponent implements OnInit {
   }
 
   contaMesa(idhash:any) {
-    alert();
-    this.router.navigate(['Mesa/' + idhash])
+    this.router.navigate(['Mesa/Conta/' + idhash])
   }
 
 
