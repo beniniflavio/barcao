@@ -37,6 +37,7 @@ import { FechamentoComponent } from './home/fechamento/fechamento.component';
 import { PagamentoComponent } from './pagamento/pagamento.component';
 import { ConsumoMesaComponent } from './home/mesa/consumo-mesa/consumo-mesa.component';
 import { ContaComponent } from './home/mesa/conta/conta.component';
+import { ConsumoBalcaoComponent } from './home/consumo-balcao/consumo-balcao.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { ContaComponent } from './home/mesa/conta/conta.component';
     PagamentoComponent,
     ConsumoMesaComponent,
     ContaComponent,
+    ConsumoBalcaoComponent,
   ],
   imports: [
     BrowserModule,

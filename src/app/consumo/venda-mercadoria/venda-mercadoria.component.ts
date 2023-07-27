@@ -89,7 +89,7 @@ export class VendaMercadoriaComponent implements OnInit {
         this.success = true;
         this.mensagem = 'Consumo registrado com sucesso';
         this.notification.showSuccess(this.mensagem, 'Consumo');
-        this.router.navigate([ 'Grupo/' + this.idhashgrupo]);
+        this.router.navigate([ 'Consumo' ]);
       },
     })
   }
