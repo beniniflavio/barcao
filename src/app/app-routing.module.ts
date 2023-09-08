@@ -36,6 +36,7 @@ const routes: Routes = [
   {path:'Carrinho/Venda/Balcao', component:  ConsumoBalcaoComponent},
   {path:'Carrinho/Venda/Mesa', component: ConsumoMesaComponent},
   {path:'Mesa/Conta/:id', component: ContaComponent},
+  {path:'Balcao/Conta/:id', component: ContaComponent},
 
 
 ];

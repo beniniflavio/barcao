@@ -45,7 +45,7 @@ export class MesasComponent implements OnInit {
   }
 
   getContaMesa(idhash:any) {
-    this.router.navigate(['Mesa/Conta/' + idhash])
+    this.router.navigate(['Mesa/Conta/' + idhash]);
   }
 
 }
