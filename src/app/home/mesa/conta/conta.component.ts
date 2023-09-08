@@ -29,6 +29,7 @@ export class ContaComponent implements OnInit {
   wrapperResumo: ContaRS[] = [];
   formModal: any;
   pagamento!: VendaPagamentoRS;
+  operacao: any;
 
   financeiro: any;
 
@@ -46,18 +47,35 @@ export class ContaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.valor = 0.0;
-    this.financeiro = 'registra';
-    this.formModal = new window.bootstrap.Modal(
-      document.getElementById('myModal')
-    );
+    if (this.route.routeConfig!.path!.includes('Balcao')) {
+      this.operacao = 'Balcao';
+      this.valor = 0.0;
+      this.financeiro = 'registra';
+      this.formModal = new window.bootstrap.Modal(
+        document.getElementById('myModal')
+      );
 
-    this.route.params.subscribe((params: Params) => {
-      this.idhash = params['id'];
-    });
+      this.route.params.subscribe((params: Params) => {
+        this.idhash = params['id'];
+      });
 
-    this.getMesa(this.idhash);
-    this.conta = 'detalhe';
+      this.getbalcao(this.idhash);
+      this.conta = 'detalhe';
+    } else {
+      this.operacao = 'Mesa';
+      this.valor = 0.0;
+      this.financeiro = 'registra';
+      this.formModal = new window.bootstrap.Modal(
+        document.getElementById('myModal')
+      );
+
+      this.route.params.subscribe((params: Params) => {
+        this.idhash = params['id'];
+      });
+
+      this.getMesa(this.idhash);
+      this.conta = 'detalhe';
+    }
   }
 
   getMesa(idhash: any) {
@@ -70,7 +88,29 @@ export class ContaComponent implements OnInit {
         );
 
         this.ValidaFinanceiro();
-        this.createForm(this.pagamento);
+        this.createFormBalcao(this.pagamento);
+      },
+      error: (err: any) => {
+        this.mensagem = 'Nenhuma mesa disponível';
+      },
+      complete: () => {
+        this.success = true;
+        this.mensagem = 'Mesa selecionadas com sucesso';
+      },
+    });
+  }
+
+  getbalcao(idhash: any) {
+    this.service.getBalcao(idhash).subscribe({
+      next: (result: any) => {
+        // this.usersList?.push(result);
+        this.wrapper = result;
+        this.wrapperResumo = this.consolidaQuantidade(
+          this.wrapper.msgSaida[0].consumos
+        );
+
+        this.ValidaFinanceiro();
+        this.createFormBalcao(this.pagamento);
       },
       error: (err: any) => {
         this.mensagem = 'Nenhuma mesa disponível';
@@ -143,6 +183,32 @@ export class ContaComponent implements OnInit {
     });
   }
 
+  sndFinalizarBalcao() {
+    this.service.setFechaPagamentoBalcao(this.wrapper.msgSaida[0].balcao.id).subscribe({
+      next: (result: any) => {
+        // this.usersList?.push(result);
+        this.wrapper = result;
+        if (this.wrapper.msgSaida[0] == 'OK') {
+          this.notification.showInfo('Venda fechada com sucesso!', 'Venda');
+          this.router.navigate(['Balcão']);
+        } else {
+          this.notification.showInfo(
+            'Ocorreu um erro tente novamente!',
+            'Venda'
+          );
+        }
+      },
+      error: (err: any) => {
+        this.mensagem = 'Nenhuma venda disponível';
+      },
+      complete: () => {
+        this.success = true;
+        this.mensagem = 'venda selecionadas com sucesso';
+      },
+    });
+  }
+
+
   sndPagamento() {
     this.openFormModal();
     let a = 0;
@@ -155,6 +221,60 @@ export class ContaComponent implements OnInit {
   }
 
   saveSomeThing() {
+    if (this.operacao == 'Balcao') {
+      this.subPagamentoBalcao();
+    } else {
+      this.subPagamentoMesa();
+    }
+  }
+
+  subPagamentoBalcao() {
+    this.formErrors = [];
+    let erro = 0;
+
+    if (this.formulario.controls['valor'].errors?.['min']) {
+      this.formErrors.push('Valor Inválido');
+      erro = erro + 1;
+    } else if (this.formulario.controls['valor'].errors?.['max']) {
+      this.formErrors.push(
+        'Valor maior que saldo a pagar ( R$' +
+          this.wrapper.msgSaida[0].total.toFixed(2) +
+          ' )'
+      );
+      erro = erro + 1;
+    } else {
+      this.formErrors.push('');
+    }
+
+    let frm = (document.getElementById('forma') as HTMLInputElement).value;
+
+    if (frm == '') {
+      this.formErrors.push('forma é obrigatório');
+      erro = erro + 1;
+    } else {
+      this.formErrors.push('');
+    }
+    if (erro == 0) {
+      this.formModal.hide();
+      this.service.setPagamentoBalcao(this.formulario).subscribe({
+        next: (result: any) => {
+          // this.usersList?.push(result);
+          this.wrapper = result;
+          this.createFormMesa(this.pagamento);
+          this.ValidaFinanceiro();
+        },
+        error: (err: any) => {
+          this.mensagem = 'Nenhuma Venda disponível';
+        },
+        complete: () => {
+          this.success = true;
+          this.mensagem = 'Venda selecionadas com sucesso';
+        },
+      });
+    }
+  }
+
+  subPagamentoMesa() {
     this.formErrors = [];
     let erro = 0;
 
@@ -186,7 +306,7 @@ export class ContaComponent implements OnInit {
         next: (result: any) => {
           // this.usersList?.push(result);
           this.wrapper = result;
-          this.createForm(this.pagamento);
+          this.createFormMesa(this.pagamento);
           this.ValidaFinanceiro();
         },
         error: (err: any) => {
@@ -208,7 +328,7 @@ export class ContaComponent implements OnInit {
     }
   }
 
-  createForm(p: VendaPagamentoRS) {
+  createFormMesa(p: VendaPagamentoRS) {
     if (p == null) {
       this.pagamento = new VendaPagamentoRS();
       this.pagamento.mesa = this.wrapper.msgSaida[0].mesa.id;
@@ -239,10 +359,53 @@ export class ContaComponent implements OnInit {
     });
   }
 
+  createFormBalcao(p: VendaPagamentoRS) {
+    if (p == null) {
+      this.pagamento = new VendaPagamentoRS();
+      this.pagamento.mesa = ''
+      this.pagamento.chave = this.wrapper.msgSaida[0].balcao.id;
+      this.pagamento.consumidor = this.wrapper.msgSaida[0].balcao.consumidor;
+      this.pagamento.descricao = '';
+      this.pagamento.valor =
+        this.wrapper.msgSaida[0].total - this.totalizaPagamentos();
+      this.pagamento.forma = -1;
+    } else {
+      this.pagamento = new VendaPagamentoRS();
+      this.pagamento.mesa = ''
+      this.pagamento.chave = this.wrapper.msgSaida[0].balcao.id;
+      this.pagamento.consumidor = this.wrapper.msgSaida[0].balcao.consumidor;
+      this.pagamento.descricao = '';
+      this.pagamento.valor =
+        this.wrapper.msgSaida[0].total - this.totalizaPagamentos();
+      this.pagamento.forma = -1;
+    }
+
+    this.formulario = new FormGroup({
+      mesa: new FormControl('', []),
+      chave: new FormControl(this.pagamento.chave, []),
+      consumidor: new FormControl(this.pagamento.consumidor, []),
+      valor: new FormControl(this.pagamento.valor, [
+        Validators.requiredTrue,
+        Validators.min(0.01),
+        Validators.max(this.pagamento.valor),
+      ]),
+      descricao: new FormControl(this.pagamento.descricao, []),
+      forma: new FormControl(this.pagamento.forma, [Validators.requiredTrue]),
+    });
+  }
+
   onSubmit() {
     this.formulario.value;
   }
   delPagamento(p: any) {
+    if (this.operacao == 'Balcao' ) {
+      this.delPagamentoBalcao(p);
+    } else {
+      this.delPagamentoMesa(p) ;
+    }
+  }
+
+  delPagamentoMesa(p: any) {
     this.service
       .getDelPagamento(this.wrapper.msgSaida[0].mesa.id, p)
       .subscribe({
@@ -250,7 +413,7 @@ export class ContaComponent implements OnInit {
           // this.usersList?.push(result);
           this.wrapper = result;
           this.ValidaFinanceiro();
-          this.createForm(this.pagamento);
+          this.createFormMesa(this.pagamento);
         },
         error: (err: any) => {
           this.mensagem = 'Nenhuma mesa disponível';
@@ -260,7 +423,28 @@ export class ContaComponent implements OnInit {
           this.mensagem = 'Mesa selecionadas com sucesso';
         },
       });
-    this.createForm(this.pagamento);
+    this.createFormMesa(this.pagamento);
+  }
+
+  delPagamentoBalcao(p: any) {
+    this.service
+      .getDelPagamento(this.wrapper.msgSaida[0].mesa.id, p)
+      .subscribe({
+        next: (result: any) => {
+          // this.usersList?.push(result);
+          this.wrapper = result;
+          this.ValidaFinanceiro();
+          this.createFormBalcao(this.pagamento);
+        },
+        error: (err: any) => {
+          this.mensagem = 'Nenhuma mesa disponível';
+        },
+        complete: () => {
+          this.success = true;
+          this.mensagem = 'Mesa selecionadas com sucesso';
+        },
+      });
+    this.createFormBalcao(this.pagamento);
   }
 
   totalizaPagamentos() {
