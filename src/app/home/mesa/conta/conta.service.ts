@@ -17,9 +17,13 @@ export class ContaService {
 
   private readonly APIDELPAGAMENTO = 'http://localhost:8081/api/v1/Pagamento/Delete/';
 
+  private readonly APIDELPAGAMENTOBALCAO = 'http://localhost:8081/api/v1/Pagamento/Delete/Balcao/';
+
   private readonly APIFECHAMENTO= 'http://localhost:8081/api/v1/Pagamento/Venda/';
 
   private readonly APIFECHAMENTOBALCAO= 'http://localhost:8081/api/v1/Pagamento/Balcao/Fechamento/';
+
+  private readonly APIENTRGAR ='http://localhost:8081/api/v1/Balcao/Entregar/';
 
   constructor(private httpClient:HttpClient,) { }
 
@@ -62,12 +66,22 @@ export class ContaService {
     return this.httpClient.get(this.APIDELPAGAMENTO + idhashMesa + '/' + idhashpagamento);
   }
 
+  getDelPagamentoBalcao( idhashBalcao:any, idhashpagamento:any ) {
+    return this.httpClient.get(this.APIDELPAGAMENTOBALCAO + idhashBalcao + '/' + idhashpagamento);
+  }
+
+
+
   setFechaPagamento( idhash:any) {
     return this.httpClient.get(this.APIFECHAMENTO + idhash );
   }
 
   setFechaPagamentoBalcao( idhash:any) {
     return this.httpClient.get(this.APIFECHAMENTOBALCAO + idhash );
+  }
+
+  setEntregar(idhash :any) {
+    return this.httpClient.get(this.APIENTRGAR + idhash );
   }
 
 }
