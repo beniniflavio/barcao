@@ -180,8 +180,10 @@ export class CarrinhoBalcaoComponent implements OnInit {
     this.serviceBalcao.setFechamentoBalcao(cd).subscribe({
       next: (result: any) => {
         // this.usersList?.push(result);
-        this.notification.showInfo(result.msgSaida[0], 'consumo');
+        this.notification.showInfo('Venda Balcão registrada com sucesso', 'consumo');
         this.getCarrinhoVenda();
+        this.router.navigate(['Balcão']);
+
       },
       error: (err: any) => {
         this.mensagem = 'Nenhuma consumo disponível';

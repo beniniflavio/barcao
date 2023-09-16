@@ -30,7 +30,7 @@ export class ContaComponent implements OnInit {
   formModal: any;
   pagamento!: VendaPagamentoRS;
   operacao: any;
-
+  situacao : any;
   financeiro: any;
 
   formErrors: String[] = [];
@@ -88,7 +88,7 @@ export class ContaComponent implements OnInit {
         );
 
         this.ValidaFinanceiro();
-        this.createFormBalcao(this.pagamento);
+        this.createFormMesa(this.pagamento);
       },
       error: (err: any) => {
         this.mensagem = 'Nenhuma mesa disponível';
@@ -105,6 +105,7 @@ export class ContaComponent implements OnInit {
       next: (result: any) => {
         // this.usersList?.push(result);
         this.wrapper = result;
+        this.situacao = this.wrapper.msgSaida[0].balcao.situacao;
         this.wrapperResumo = this.consolidaQuantidade(
           this.wrapper.msgSaida[0].consumos
         );
@@ -164,7 +165,7 @@ export class ContaComponent implements OnInit {
         // this.usersList?.push(result);
         this.wrapper = result;
         if (this.wrapper.msgSaida[0] == 'OK') {
-          this.notification.showInfo('Venda fechada com sucesso!', 'Venda');
+          this.notification.showSuccess('Venda fechada com sucesso!', 'Venda');
           this.router.navigate(['Mesas']);
         } else {
           this.notification.showInfo(
@@ -189,7 +190,7 @@ export class ContaComponent implements OnInit {
         // this.usersList?.push(result);
         this.wrapper = result;
         if (this.wrapper.msgSaida[0] == 'OK') {
-          this.notification.showInfo('Venda fechada com sucesso!', 'Venda');
+          this.notification.showSuccess('Venda fechada com sucesso!', 'Venda');
           this.router.navigate(['Balcão']);
         } else {
           this.notification.showInfo(
@@ -260,8 +261,10 @@ export class ContaComponent implements OnInit {
         next: (result: any) => {
           // this.usersList?.push(result);
           this.wrapper = result;
-          this.createFormMesa(this.pagamento);
+          this.createFormBalcao(this.pagamento);
           this.ValidaFinanceiro();
+          this.notification.showSuccess('Pagamento efetuado com sucesso!', 'Venda');
+          //window.location.reload(false);
         },
         error: (err: any) => {
           this.mensagem = 'Nenhuma Venda disponível';
@@ -308,6 +311,8 @@ export class ContaComponent implements OnInit {
           this.wrapper = result;
           this.createFormMesa(this.pagamento);
           this.ValidaFinanceiro();
+          this.notification.showSuccess('Pagamento Efetuado com sucesso!', 'Venda');
+          //window.location.reload(false);
         },
         error: (err: any) => {
           this.mensagem = 'Nenhuma mesa disponível';
@@ -403,6 +408,7 @@ export class ContaComponent implements OnInit {
     } else {
       this.delPagamentoMesa(p) ;
     }
+    this.notification.showSuccess('Exclusão efetuada com sucesso!', 'Venda');
   }
 
   delPagamentoMesa(p: any) {
@@ -414,6 +420,7 @@ export class ContaComponent implements OnInit {
           this.wrapper = result;
           this.ValidaFinanceiro();
           this.createFormMesa(this.pagamento);
+          //window.location.reload(false);
         },
         error: (err: any) => {
           this.mensagem = 'Nenhuma mesa disponível';
@@ -428,13 +435,14 @@ export class ContaComponent implements OnInit {
 
   delPagamentoBalcao(p: any) {
     this.service
-      .getDelPagamento(this.wrapper.msgSaida[0].mesa.id, p)
+      .getDelPagamentoBalcao(p, this.wrapper.msgSaida[0].balcao.id)
       .subscribe({
         next: (result: any) => {
           // this.usersList?.push(result);
           this.wrapper = result;
           this.ValidaFinanceiro();
           this.createFormBalcao(this.pagamento);
+          //window.location.reload(false);
         },
         error: (err: any) => {
           this.mensagem = 'Nenhuma mesa disponível';
@@ -452,5 +460,25 @@ export class ContaComponent implements OnInit {
       (ac: number, cr: any) => ac + cr.valor,
       0
     );
+  }
+
+
+  sndEntregar(idhash : string) {
+
+    this.service.setEntregar(this.wrapper.msgSaida[0].balcao.id)
+    .subscribe({
+      next: (result: any) => {
+        // this.usersList?.push(result);
+        this.notification.showSuccess('Entrega concluida com sucesso!', 'Venda');
+        this.router.navigate(['Balcão']);
+      },
+      error: (err: any) => {
+        this.mensagem = 'Nenhuma mesa disponível';
+      },
+      complete: () => {
+        this.success = true;
+        this.mensagem = 'Mesa selecionadas com sucesso';
+      },
+    });
   }
 }

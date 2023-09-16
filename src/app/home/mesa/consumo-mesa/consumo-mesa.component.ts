@@ -48,7 +48,7 @@ export class ConsumoMesaComponent implements OnInit {
         // this.usersList?.push(result);
         this.wrapperConsumoMesa = result;
         this.notification.showInfo('Cosumo Registrado na Mesa', 'Consumo');
-        setTimeout(this.contaMesa, 2000);
+        this.router.navigate(['Mesa/Conta/' + idhash]);
       },
       error: (err: any) => {
         this.mensagem = 'Nenhuma mesa disponível';
@@ -60,9 +60,7 @@ export class ConsumoMesaComponent implements OnInit {
     });
   }
 
-  contaMesa(idhash:any) {
-    this.router.navigate(['Mesa/Conta/' + idhash])
-  }
+
 
 
 
