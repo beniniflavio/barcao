@@ -18,7 +18,7 @@ export class AbrirService {
         'Content-Type':  'application/json'
       })
     };
-
+    alert(m.value);
     const body= JSON.stringify(m.value);
 
     return this.httpClient.post<any> (this.APIABRIR, body, httpOptions);

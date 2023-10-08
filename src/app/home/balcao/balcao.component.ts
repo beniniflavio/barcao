@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BalcaoService } from './balcao.service';
 import { Router } from '@angular/router';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-balcao',
@@ -14,10 +15,15 @@ export class BalcaoComponent implements OnInit {
   wrapper:any;
 
   constructor(private service: BalcaoService,
+    private svcAdmin :AdminService,
     private router:Router,) { }
 
   ngOnInit(): void {
-
+    this.svcAdmin.getMovimentoAberto().subscribe( response => {
+      this.wrapper = response;
+      if ( this.wrapper.msgSaida[0] == null )
+      this.router.navigate([ 'Movimento' ]);
+    });
     this.service.getBalcao().subscribe({
       next: (result: any) => {
         // this.usersList?.push(result);

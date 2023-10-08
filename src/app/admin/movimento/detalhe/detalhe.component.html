@@ -1,0 +1,25 @@
+<div class="card mt-4">
+  <h5 class="card-header">Total : {{ detalhe.msgSaida[0].data }} </h5>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Descrição</th>
+          <th scope="col">Total</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dtl of detalhe.msgSaida[2]; index as i">
+          <th scope="row">{{ i + 1}}</th>
+          <td class="text-start">{{dtl.descricao}}</td>
+          <td class="text-end">R{{ dtl.total | currency}}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+</div>

@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { ToastrModule } from 'ngx-toastr';
 import { TagCloudComponent } from 'angular-tag-cloud-module';
@@ -38,6 +40,10 @@ import { PagamentoComponent } from './pagamento/pagamento.component';
 import { ConsumoMesaComponent } from './home/mesa/consumo-mesa/consumo-mesa.component';
 import { ContaComponent } from './home/mesa/conta/conta.component';
 import { ConsumoBalcaoComponent } from './home/consumo-balcao/consumo-balcao.component';
+import { VisualizarComponent } from './admin/movimento/visualizar/visualizar.component';
+import { ResumoComponent } from './admin/movimento/resumo/resumo.component';
+import { DetalheComponent } from './admin/movimento/detalhe/detalhe.component';
+import { TipoComponent } from './admin/movimento/tipo/tipo.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +75,10 @@ import { ConsumoBalcaoComponent } from './home/consumo-balcao/consumo-balcao.com
     ConsumoMesaComponent,
     ContaComponent,
     ConsumoBalcaoComponent,
+    VisualizarComponent,
+    ResumoComponent,
+    DetalheComponent,
+    TipoComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +96,7 @@ import { ConsumoBalcaoComponent } from './home/consumo-balcao/consumo-balcao.com
     TagCloudComponent,
 
   ],
-  providers: [],
+  providers: [ CommonModule, DatePipe ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
