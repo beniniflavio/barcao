@@ -1,0 +1,8 @@
+<div class="card mt-4">
+  <h5 class="card-header">Movimento : {{ resumo.msgSaida[0].data }} </h5>
+  <div class="card-body">
+    <h5 class="card-title">Caixa : R{{ resumo.msgSaida[0].valor | currency}}</h5>
+    <p class="card-text">Venda: R{{ resumo.msgSaida[1] | currency}}</p>
+    <a href="#" class="btn btn-primary">Fechar</a>
+  </div>
+</div>
