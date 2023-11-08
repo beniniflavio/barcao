@@ -40,6 +40,7 @@ export class PersonalizadoService {
     this.cmPer.chave = c.chave;
     this.cmPer.consumidor = c.consumidor;
     this.cmPer.total = c.total;
+    this.cmPer.mensagens = c.mensagens;
 
     let ings:IngredienteData[]=[];
     for (let index = 0; index < c.ingredientes.length; index++) {
@@ -54,7 +55,6 @@ export class PersonalizadoService {
     }
 
     this.cmPer.ingredientes = ings;
-
 
     const body= JSON.stringify(this.cmPer);
 

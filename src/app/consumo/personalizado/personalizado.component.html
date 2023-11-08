@@ -110,7 +110,7 @@
                       <div class="row">
                         <div class="col">
                           <app-mensagem *ngFor="let mensagem of wrapperMSG.msgSaida[0]; let i = index "
-                            [wrapper]=mensagem> [index] = i </app-mensagem>
+                            [wrapper]=mensagem (mensagem)="RecebeMensage(mensagem)"> [index] = i </app-mensagem>
                         </div>
                       </div>
                     </div>

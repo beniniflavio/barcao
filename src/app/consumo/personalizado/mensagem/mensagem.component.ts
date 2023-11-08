@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MensagemService } from './mensagem.service';
 
 import {
@@ -18,8 +18,10 @@ export class MensagemComponent implements OnInit {
 
   @Input() wrapper: any;
   @Input()  index: any;
-  mensagem: any;
+  mensagems: any;
   success: any;
+
+  @Output() mensagem = new EventEmitter();
 
   constructor(private service:MensagemService ) { }
 
@@ -37,11 +39,11 @@ export class MensagemComponent implements OnInit {
         this.wrapper = result;
       },
       error: (err: any) => {
-        this.mensagem = 'Nenhuma mensagem disponível';
+        this.mensagems = 'Nenhuma mensagem disponível';
       },
       complete: () => {
         this.success = true;
-        this.mensagem = 'mensagens obtida com sucesso';
+        this.mensagems = 'mensagens obtida com sucesso';
       },
     });
   }
@@ -49,6 +51,7 @@ export class MensagemComponent implements OnInit {
   setMensagem(m:any) {
     if (m.situacao == 0 ) {
         m.situacao = 1;
+        this.mensagem.emit(m);
     } else {
       m.situacao = 0;
     };

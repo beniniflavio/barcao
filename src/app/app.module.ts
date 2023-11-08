@@ -44,6 +44,9 @@ import { VisualizarComponent } from './admin/movimento/visualizar/visualizar.com
 import { ResumoComponent } from './admin/movimento/resumo/resumo.component';
 import { DetalheComponent } from './admin/movimento/detalhe/detalhe.component';
 import { TipoComponent } from './admin/movimento/tipo/tipo.component';
+import { CozinhaComponent } from './cozinha/cozinha.component';
+import { PreparacoesComponent } from './preparacoes/preparacoes.component';
+import { PreparacaoComponent } from './preparacoes/preparacao/preparacao.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +82,9 @@ import { TipoComponent } from './admin/movimento/tipo/tipo.component';
     ResumoComponent,
     DetalheComponent,
     TipoComponent,
+    CozinhaComponent,
+    PreparacoesComponent,
+    PreparacaoComponent,
   ],
   imports: [
     BrowserModule,

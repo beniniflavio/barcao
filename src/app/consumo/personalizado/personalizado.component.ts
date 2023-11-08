@@ -23,6 +23,7 @@ export class PersonalizadoComponent implements OnInit {
   idhash: any;
   formModal: any;
   consumidor: any | null;
+  mensagens : {id: string, descricao: string, situacao: number, index: number}[]= [];
 
   @Input() bodyText = ' Modal';
 
@@ -168,6 +169,7 @@ export class PersonalizadoComponent implements OnInit {
     this.wrapper.msgSaida[0].consumidor = (
       document.getElementById('consumidor') as HTMLInputElement
     ).value;
+    this.wrapper.msgSaida[0].mensagens = this.mensagens;
     this.service.setFinalizaConsumo(this.wrapper.msgSaida[0]).subscribe({
       next: (result: any) => {
         // this.usersList?.push(result);
@@ -195,5 +197,9 @@ export class PersonalizadoComponent implements OnInit {
     this.wrapper.msgSaida[0].consumidor = (
       document.getElementById('consumidor') as HTMLInputElement
     ).value;
+  }
+
+  RecebeMensage(mens: any) {
+    this.mensagens.push(mens);
   }
 }
