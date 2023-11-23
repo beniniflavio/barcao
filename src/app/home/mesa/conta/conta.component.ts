@@ -14,6 +14,7 @@ import {
 
 declare var window: any;
 
+
 @Component({
   selector: 'app-conta',
   templateUrl: './conta.component.html',
@@ -32,6 +33,8 @@ export class ContaComponent implements OnInit {
   operacao: any;
   situacao : any;
   financeiro: any;
+  exibe : any;
+
 
   formErrors: String[] = [];
 
@@ -61,6 +64,7 @@ export class ContaComponent implements OnInit {
 
       this.getbalcao(this.idhash);
       this.conta = 'detalhe';
+
     } else {
       this.operacao = 'Mesa';
       this.valor = 0.0;
@@ -125,14 +129,17 @@ export class ContaComponent implements OnInit {
 
   showPagamentos() {
     this.conta = 'pagamento';
+    this.exibe =  null;
   }
 
   showDetalhe() {
     this.conta = 'detalhe';
+
   }
 
   showResumo() {
     this.conta = 'resumo';
+    this.exibe =  null;
   }
 
   consolidaQuantidade(vm: any) {
@@ -480,5 +487,11 @@ export class ContaComponent implements OnInit {
         this.mensagem = 'Mesa selecionadas com sucesso';
       },
     });
+  }
+
+  setViewItem(idhash :any) {
+    this.exibe =  idhash;
+
+
   }
 }

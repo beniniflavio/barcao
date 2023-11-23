@@ -47,6 +47,7 @@ import { TipoComponent } from './admin/movimento/tipo/tipo.component';
 import { CozinhaComponent } from './cozinha/cozinha.component';
 import { PreparacoesComponent } from './preparacoes/preparacoes.component';
 import { PreparacaoComponent } from './preparacoes/preparacao/preparacao.component';
+import { ItemComponent } from './home/mesa/conta/item/item.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { PreparacaoComponent } from './preparacoes/preparacao/preparacao.compone
     CozinhaComponent,
     PreparacoesComponent,
     PreparacaoComponent,
+    ItemComponent,
   ],
   imports: [
     BrowserModule,

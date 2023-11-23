@@ -1,0 +1,16 @@
+<div class="card">
+  <h5 class="card-header">{{ item.mercadoria.nome }} R{{ item.valor | currency }}</h5>
+  <div class="card-body">
+    <h5 class="card-title">Consumidor : {{ item.consumidor}} </h5>
+    <p class="card-text">
+
+      <span *ngFor="let itens of item.ingredientes; let i = index">
+        <ng-container >
+          {{ itens.nome }} /
+        </ng-container>
+      </span>
+      </p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+

@@ -1,3 +1,4 @@
+<ng-container >
 <div class="card mt-1">
   <h5 class="card-header">
     <ng-container *ngIf="operacao == 'Balcao'">
@@ -79,14 +80,10 @@
             </thead>
             <tbody>
               <tr
-                *ngFor="
-                  let cmsm of this.wrapper.msgSaida[0].consumos;
-                  let i = index
-                "
-              >
-                <th scope="row">{{ i + 1 }}</th>
+                *ngFor=" let cmsm of this.wrapper.msgSaida[0].consumos; let i = index" (click)="setViewItem(cmsm.id)">
+                <th scope="row" >{{ i + 1 }}</th>
                 <td class="text-start">{{ cmsm.mercadoria.nome }}</td>
-                <td class="text-end">{{ cmsm.consumidor }}</td>
+                <td class="text-start">{{ cmsm.consumidor }}</td>
                 <td class="text-end">
                   R{{ cmsm.mercadoria.valor | currency }}
                 </td>
@@ -228,8 +225,14 @@
         </div>
       </ng-container>
     </div>
+    <div *ngFor=" let cmsm of this.wrapper.msgSaida[0].consumos; let i = index" id="{{cmsm.id}}"  >
+      <ng-container *ngIf="exibe == cmsm.id" >
+        <app-item [item]="cmsm"></app-item>
+      </ng-container>
+    </div>
+
     <ng-container *ngIf="financeiro == 'registra'">
-      <div class="card-footer text-muted">
+      <div class="card-footer text-muted mt-1">
         <div class="card text-white bg-danger mb-3">
           <div class="card-header">Totalização</div>
           <div class="card-body">
@@ -338,3 +341,5 @@
     </div>
   </div>
 </div>
+</ng-container>
+
